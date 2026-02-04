@@ -6,6 +6,8 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreJournalRequest;
 use App\Http\Requests\UpdateJournalRequest;
 use App\Models\Journal;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class JournalController extends Controller
 {
@@ -14,7 +16,7 @@ class JournalController extends Controller
      */
     public function index()
     {
-        //
+        return response()->json(Auth::user()->journals);
     }
 
     /**
@@ -30,7 +32,9 @@ class JournalController extends Controller
      */
     public function store(StoreJournalRequest $request)
     {
-        //
+        $journal = Auth::user()->journals()->create($request->validated());
+
+        return response()->json($journal, 201);
     }
 
     /**
@@ -38,7 +42,9 @@ class JournalController extends Controller
      */
     public function show(Journal $journal)
     {
-        //
+        $this->authorize('view', $journal);
+
+        return response()->json($journal);
     }
 
     /**
@@ -54,7 +60,11 @@ class JournalController extends Controller
      */
     public function update(UpdateJournalRequest $request, Journal $journal)
     {
-        //
+        $this->authorize('update', $journal);
+
+        $journal->update($request->validated());
+
+        return response()->json($journal);
     }
 
     /**
@@ -62,6 +72,10 @@ class JournalController extends Controller
      */
     public function destroy(Journal $journal)
     {
-        //
+        $this->authorize('delete', $journal);
+
+        $journal->delete();
+
+        return response()->json(['message' => 'Journal deleted']);
     }
 }

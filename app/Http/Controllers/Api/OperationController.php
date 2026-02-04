@@ -6,6 +6,8 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreOperationRequest;
 use App\Http\Requests\UpdateOperationRequest;
 use App\Models\Operation;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class OperationController extends Controller
 {
@@ -14,7 +16,11 @@ class OperationController extends Controller
      */
     public function index()
     {
-        //
+        $operations = Operation::whereHas('journal', function ($query) {
+            $query->where('user_id', Auth::id());
+        })->get();
+
+        return response()->json($operations);
     }
 
     /**
@@ -30,7 +36,9 @@ class OperationController extends Controller
      */
     public function store(StoreOperationRequest $request)
     {
-        //
+        $operation = Operation::create($request->validated());
+
+        return response()->json($operation, 201);
     }
 
     /**
@@ -38,7 +46,9 @@ class OperationController extends Controller
      */
     public function show(Operation $operation)
     {
-        //
+        $this->authorize('view', $operation);
+
+        return response()->json($operation);
     }
 
     /**
@@ -54,7 +64,11 @@ class OperationController extends Controller
      */
     public function update(UpdateOperationRequest $request, Operation $operation)
     {
-        //
+        $this->authorize('update', $operation);
+
+        $operation->update($request->validated());
+
+        return response()->json($operation);
     }
 
     /**
@@ -62,6 +76,10 @@ class OperationController extends Controller
      */
     public function destroy(Operation $operation)
     {
-        //
+        $this->authorize('delete', $operation);
+
+        $operation->delete();
+
+        return response()->json(['message' => 'Operation deleted']);
     }
 }

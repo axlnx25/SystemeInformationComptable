@@ -3,6 +3,7 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Support\Facades\Auth;
 
 class UpdateOperationRequest extends FormRequest
 {
@@ -11,7 +12,8 @@ class UpdateOperationRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return false;
+        $operation = $this->route('operation');
+        return Auth::check() && $operation->journal->user_id === Auth::id();
     }
 
     /**
@@ -22,7 +24,13 @@ class UpdateOperationRequest extends FormRequest
     public function rules(): array
     {
         return [
-            //
+            'date' => 'sometimes|required|date',
+            'reference' => 'nullable|string|max:255',
+            'libelle' => 'sometimes|required|string|max:255',
+            'debit' => 'nullable|numeric|min:0',
+            'credit' => 'nullable|numeric|min:0',
+            'numero_compte_general' => 'sometimes|required|string|max:255',
+            'journal_id' => 'sometimes|required|exists:journals,id',
         ];
     }
 }

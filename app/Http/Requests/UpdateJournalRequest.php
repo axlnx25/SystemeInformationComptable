@@ -3,6 +3,7 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Support\Facades\Auth;
 
 class UpdateJournalRequest extends FormRequest
 {
@@ -11,18 +12,17 @@ class UpdateJournalRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return false;
+        return Auth::check() && $this->route('journal')->user_id === Auth::id();
+       /**
+        *@return array<string, \Illuminate\Contracts\Validation\ValidationRule | array<mixed>|string >
+        */
+
     }
 
-    /**
-     * Get the validation rules that apply to the request.
-     *
-     * @return array<string, \Illuminate\Contracts\Validation\ValidationRule|array<mixed>|string>
-     */
     public function rules(): array
     {
         return [
-            //
+            'designation' => 'sometimes|required|string|max:255',
         ];
     }
 }

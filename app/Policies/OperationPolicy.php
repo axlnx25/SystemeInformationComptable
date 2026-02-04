@@ -13,7 +13,7 @@ class OperationPolicy
      */
     public function viewAny(User $user): bool
     {
-        return false;
+        return true;
     }
 
     /**
@@ -21,7 +21,7 @@ class OperationPolicy
      */
     public function view(User $user, Operation $operation): bool
     {
-        return false;
+        return $operation->journal->user_id === $user->id;
     }
 
     /**
@@ -29,7 +29,7 @@ class OperationPolicy
      */
     public function create(User $user): bool
     {
-        return false;
+        return true;
     }
 
     /**
@@ -37,7 +37,7 @@ class OperationPolicy
      */
     public function update(User $user, Operation $operation): bool
     {
-        return false;
+        return $operation->journal->user_id === $user->id;
     }
 
     /**
@@ -45,7 +45,7 @@ class OperationPolicy
      */
     public function delete(User $user, Operation $operation): bool
     {
-        return false;
+        return $operation->journal->user_id === $user->id;
     }
 
     /**
