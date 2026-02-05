@@ -44,7 +44,15 @@ class JournalController extends Controller
     {
         $this->authorize('view', $journal);
 
-        return response()->json($journal);
+        $journal->load('operations');
+        $totals = $journal->getTotals();
+        $isBalanced = $journal->isBalanced();
+
+        return response()->json([
+            'journal' => $journal,
+            'totals' => $totals,
+            'is_balanced' => $isBalanced,
+        ]);
     }
 
     /**
@@ -77,5 +85,51 @@ class JournalController extends Controller
         $journal->delete();
 
         return response()->json(['message' => 'Journal deleted']);
+    }
+
+    /**
+     * Get operations for a journal, grouped by numero_operation
+     */
+    public function getOperations(Journal $journal)
+    {
+        $this->authorize('view', $journal);
+
+        $groupedOperations = $journal->getOperationsGrouped();
+
+        return response()->json([
+            'journal_id' => $journal->id,
+            'journal_designation' => $journal->designation,
+            'operations' => $groupedOperations,
+        ]);
+    }
+
+    /**
+     * Get totals (debit/credit) for a journal
+     */
+    public function getTotals(Journal $journal)
+    {
+        $this->authorize('view', $journal);
+
+        $totals = $journal->getTotals();
+
+        return response()->json($totals);
+    }
+
+    /**
+     * Validate if a journal is balanced
+     */
+    public function validateBalance(Journal $journal)
+    {
+        $this->authorize('view', $journal);
+
+        $isBalanced = $journal->isBalanced();
+        $totals = $journal->getTotals();
+
+        return response()->json([
+            'is_balanced' => $isBalanced,
+            'total_debit' => $totals['total_debit'],
+            'total_credit' => $totals['total_credit'],
+            'difference' => bcsub($totals['total_debit'], $totals['total_credit'], 2),
+        ]);
     }
 }

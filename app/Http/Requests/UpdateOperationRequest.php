@@ -24,6 +24,7 @@ class UpdateOperationRequest extends FormRequest
     public function rules(): array
     {
         return [
+            'numero_operation' => 'sometimes|required|string|max:255',
             'date' => 'sometimes|required|date',
             'reference' => 'nullable|string|max:255',
             'libelle' => 'sometimes|required|string|max:255',
@@ -32,5 +33,25 @@ class UpdateOperationRequest extends FormRequest
             'numero_compte_general' => 'sometimes|required|string|max:255',
             'journal_id' => 'sometimes|required|exists:journals,id',
         ];
+    }
+
+    /**
+     * Configure the validator instance.
+     */
+    public function withValidator($validator)
+    {
+        $validator->after(function ($validator) {
+            // Ensure either debit OR credit is filled, not both and not neither
+            $debit = $this->debit ?? $this->route('operation')->debit ?? 0;
+            $credit = $this->credit ?? $this->route('operation')->credit ?? 0;
+
+            if ($debit > 0 && $credit > 0) {
+                $validator->errors()->add('debit', 'Une ligne ne peut pas avoir à la fois un débit et un crédit.');
+            }
+
+            if ($debit == 0 && $credit == 0) {
+                $validator->errors()->add('debit', 'Une ligne doit avoir soit un débit, soit un crédit.');
+            }
+        });
     }
 }
