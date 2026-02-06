@@ -13,7 +13,7 @@ class Journal extends Model
 
     protected $fillable = [
         'designation',
-        'id'
+        'user_id',
     ];
 
     public function operations(): HasMany

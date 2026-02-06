@@ -1,0 +1,111 @@
+/* Additional fixes for table inputs */
+
+/* Override input styles inside table cells */
+.draftRow th .input,
+.table .inputCell {
+    width: 100%;
+    padding: 8px 10px;
+    border-radius: 6px;
+    border: 1px solid #d1d5db;
+    background: #fff;
+    color: #111827;
+    outline: none;
+    box-sizing: border-box;
+    font-size: 13px;
+}
+
+.draftRow th .input:focus,
+.table .inputCell:focus {
+    border-color: #2563eb;
+    box-shadow: 0 0 0 2px rgba(37, 99, 235, 0.1);
+}
+
+/* Fix table cell padding for inputs */
+.draftRow th {
+    padding: 6px 8px;
+}
+
+.table tbody td {
+    padding: 6px 8px;
+}
+
+/* Ensure inputs don't overflow */
+.table th,
+.table td {
+    max-width: 200px;
+}
+
+.table th:nth-child(1),
+.table td:nth-child(1) {
+    width: 140px;
+}
+
+.table th:nth-child(2),
+.table td:nth-child(2) {
+    width: 60px;
+    text-align: center;
+}
+
+.table th:nth-child(3),
+.table td:nth-child(3) {
+    width: 140px;
+}
+
+.table th:nth-child(4),
+.table td:nth-child(4) {
+    width: 120px;
+}
+
+.table th:nth-child(5),
+.table td:nth-child(5) {
+    min-width: 200px;
+}
+
+.table th:nth-child(6),
+.table td:nth-child(6),
+.table th:nth-child(7),
+.table td:nth-child(7) {
+    width: 120px;
+}
+
+.table th:nth-child(8),
+.table td:nth-child(8) {
+    width: 110px;
+}
+
+/* Additional fixes for buttons and layout */
+
+/* Ensure row class works properly */
+.row {
+    display: flex;
+    align-items: center;
+}
+
+.gap {
+    gap: 10px;
+}
+
+/* Fix button sizing */
+.btn,
+.btnPrimary,
+.btnDanger {
+    white-space: nowrap;
+    display: inline-block;
+}
+
+/* Ensure links don't wrap */
+.link {
+    white-space: nowrap;
+}
+
+/* Fix table cell for actions */
+.table td.right,
+.table th.right {
+    white-space: nowrap;
+}
+
+/* Ensure action column has enough width */
+.table th:last-child,
+.table td:last-child {
+    min-width: 200px;
+}

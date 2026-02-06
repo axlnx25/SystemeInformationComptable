@@ -1,0 +1,411 @@
+/* Additional styles for React-inspired design */
+
+/* === SIDEBAR DARK THEME === */
+.sidebar {
+    background: #0f172a !important;
+    color: #e5e7eb;
+    border-right: 1px solid rgba(148, 163, 184, 0.18) !important;
+}
+
+.sidebar-link {
+    color: #e5e7eb;
+}
+
+.sidebar-link:hover {
+    background: rgba(255, 255, 255, 0.08);
+    color: #e5e7eb;
+}
+
+.sidebar-link.active {
+    background: rgba(59, 130, 246, 0.25);
+    outline: 1px solid rgba(59, 130, 246, 0.35);
+}
+
+/* === TABLE STYLES (React-inspired) === */
+.table {
+    width: 100%;
+    border-collapse: collapse;
+    min-width: 900px;
+    table-layout: fixed;
+}
+
+.table thead tr:not(.draftRow) th {
+    padding: 10px 16px;
+    background: #3f3f46;
+    color: #ffffff;
+    text-align: left;
+    font-size: 12px;
+    border-bottom: 1px solid #e5e7eb;
+}
+
+.table thead tr:not(.draftRow) th.right {
+    padding-left: 12px;
+    text-align: right;
+}
+
+.table tbody tr:nth-child(odd) td {
+    background: #ffffff;
+}
+
+.table tbody tr:nth-child(even) td {
+    background: #f5f5f5;
+}
+
+.table th,
+.table td {
+    padding: 10px 12px;
+    border-bottom: 1px solid #e5e7eb;
+    vertical-align: middle;
+    overflow: hidden;
+}
+
+.table tbody td+td {
+    border-left: 1px solid #e5e7eb;
+}
+
+.table tfoot tr {
+    background: rgba(14, 165, 233, 0.1);
+    font-weight: 600;
+}
+
+/* === DRAFT ROW (ligne de saisie) === */
+.draftRow td,
+.draftRow th {
+    background: #f8fafc;
+    border-bottom: 10px solid #f3f4f6;
+}
+
+.draftRow th {
+    padding-top: 4px;
+    padding-bottom: 4px;
+}
+
+.draftRow th .input,
+.draftRow th input {
+    width: 100%;
+    padding: 8px 10px;
+    border-radius: 10px;
+    border: 1px solid #d1d5db;
+    background: #fff;
+    color: #111827;
+    outline: none;
+    box-sizing: border-box;
+}
+
+.draftRow th .input:focus,
+.draftRow th input:focus {
+    border-color: #2563eb;
+    box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.15);
+}
+
+/* === INPUT CELLS (édition inline) === */
+.inputCell {
+    padding: 8px 10px;
+    border-radius: 10px;
+    border: 1px solid #d1d5db;
+    background: #fff;
+    color: #111827;
+    outline: none;
+    box-sizing: border-box;
+    width: 100%;
+}
+
+.inputCell:focus {
+    border-color: #2563eb;
+    box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.15);
+}
+
+/* === KPI CARDS === */
+.kpiGrid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 12px;
+    margin-bottom: 14px;
+}
+
+@media (max-width: 900px) {
+    .kpiGrid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+}
+
+@media (max-width: 560px) {
+    .kpiGrid {
+        grid-template-columns: 1fr;
+    }
+}
+
+.kpiCard {
+    background: #ffffff;
+    border: 1px solid #dbeafe;
+    border-radius: 14px;
+    padding: 14px;
+    box-shadow: 0 1px 0 rgba(17, 24, 39, 0.04);
+}
+
+.kpiLabel {
+    font-size: 11px;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    color: #2563eb;
+    margin-bottom: 8px;
+}
+
+.kpiValue {
+    font-size: 22px;
+    font-weight: 900;
+    color: #111827;
+    margin-bottom: 6px;
+}
+
+.kpiHint {
+    font-size: 12px;
+    font-weight: 600;
+    color: #6b7280;
+}
+
+/* === PANEL === */
+.panel {
+    background: #ffffff;
+    border: 1px solid #e5e7eb;
+    border-radius: 14px;
+    padding: 16px;
+    margin-bottom: 14px;
+}
+
+.panelTitle {
+    margin: 0 0 12px 0;
+    font-size: 14px;
+    font-weight: 700;
+    color: #111827;
+}
+
+/* === TABLE WRAP === */
+.tableWrap {
+    width: 100%;
+    overflow: auto;
+    border-radius: 12px;
+    border: 1px solid #e5e7eb;
+}
+
+/* === BADGES === */
+.badgeOk,
+.badgeWarn {
+    font-size: 12px;
+    font-weight: 800;
+    padding: 6px 10px;
+    border-radius: 999px;
+    display: inline-block;
+}
+
+.badgeOk {
+    background: #dcfce7;
+    color: #166534;
+}
+
+.badgeWarn {
+    background: #fef3c7;
+    color: #92400e;
+}
+
+/* === UTILITY CLASSES === */
+.mono {
+    font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+}
+
+.right {
+    text-align: right;
+}
+
+.strong {
+    font-weight: 800;
+}
+
+.muted {
+    color: #6b7280;
+    font-size: 13px;
+}
+
+.row {
+    display: flex;
+    align-items: center;
+}
+
+.gap {
+    gap: 10px;
+}
+
+.between {
+    justify-content: space-between;
+}
+
+/* === JOURNAL TITLE BAR === */
+.journalTitleBar {
+    background: #3f3f46;
+    color: #ffffff;
+    padding: 10px 12px;
+    border-radius: 12px;
+}
+
+.journalTitleBar .pageTitle,
+.journalTitleBar h1,
+.journalTitleBar h2,
+.journalTitleBar h3 {
+    color: #ffffff;
+    background: none;
+    -webkit-text-fill-color: #ffffff;
+}
+
+/* === PAGE STYLES === */
+.page {
+    max-width: 1100px;
+    width: 100%;
+    margin: 0 auto;
+}
+
+.pageWide {
+    max-width: none;
+}
+
+.pageHeader {
+    display: grid;
+    gap: 6px;
+    margin-bottom: 14px;
+}
+
+.pageTitle {
+    margin: 0;
+    font-size: 22px;
+    line-height: 1.2;
+}
+
+/* === GRID LAYOUTS === */
+.grid2 {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 12px;
+}
+
+.grid3 {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 12px;
+    align-items: end;
+}
+
+@media (max-width: 900px) {
+    .grid3 {
+        grid-template-columns: 1fr;
+    }
+}
+
+/* === FIELD STYLES === */
+.field {
+    display: grid;
+    gap: 6px;
+}
+
+.fieldLabel {
+    font-size: 12px;
+    color: #374151;
+}
+
+.input {
+    width: 100%;
+    padding: 10px 12px;
+    border-radius: 10px;
+    border: 1px solid #d1d5db;
+    background: #fff;
+    color: #111827;
+    outline: none;
+    box-sizing: border-box;
+}
+
+.input:focus {
+    border-color: #2563eb;
+    box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.15);
+}
+
+/* === BUTTON OVERRIDES FOR REACT STYLE === */
+.btnPrimary {
+    background: #2563eb;
+    color: #fff;
+    border: 1px solid transparent;
+    border-radius: 10px;
+    padding: 10px 12px;
+    cursor: pointer;
+    font-weight: 600;
+}
+
+.btnPrimary:hover {
+    background: #1d4ed8;
+}
+
+.btnPrimary:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+}
+
+.btnDanger {
+    background: #fee2e2;
+    border: 1px solid #fecaca;
+    color: #991b1b;
+    border-radius: 10px;
+    padding: 10px 12px;
+    cursor: pointer;
+    font-weight: 600;
+}
+
+.btnDanger:hover {
+    background: #fecaca;
+}
+
+.btn {
+    background: #f3f4f6;
+    border: 1px solid #e5e7eb;
+    color: #111827;
+    border-radius: 10px;
+    padding: 10px 12px;
+    cursor: pointer;
+    font-weight: 600;
+}
+
+.btn:hover {
+    background: #e5e7eb;
+}
+
+/* === ALERT STYLES === */
+.alert {
+    background: #fef2f2;
+    border: 1px solid #fecaca;
+    color: #991b1b;
+    padding: 10px 12px;
+    border-radius: 12px;
+    margin-bottom: 12px;
+}
+
+.success {
+    background: #ecfdf5;
+    border: 1px solid #a7f3d0;
+    color: #065f46;
+    padding: 10px 12px;
+    border-radius: 12px;
+    margin-bottom: 12px;
+}
+
+/* === TABLE HEADER === */
+.tableHeader {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    margin-bottom: 10px;
+}
+
+@media (max-width: 560px) {
+    .tableHeader {
+        flex-direction: column;
+        align-items: stretch;
+    }
+}
