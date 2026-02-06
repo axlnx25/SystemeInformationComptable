@@ -189,12 +189,16 @@
                                                 <span class="material-symbols-outlined">edit_note</span>
                                             </a>
                                             <form action="{{ route('journals.destroy', $journal) }}" method="POST"
-                                                style="display: inline;"
+                                                style="display: inline-flex;"
+                                                data-debug-delete="journal-dashboard"
+                                                data-journal-id="{{ $journal->id }}"
+                                                data-journal-name="{{ $journal->designation }}"
                                                 onsubmit="return confirm('Êtes-vous sûr de vouloir supprimer le journal « {{ $journal->designation }} » et toutes ses opérations ?');">
                                                 @csrf
                                                 @method('DELETE')
                                                 <button type="submit" class="iconBtn iconBtnDanger"
-                                                    title="Supprimer le journal">
+                                                    title="Supprimer le journal"
+                                                    data-debug-delete-btn="journal-dashboard">
                                                     <span class="material-symbols-outlined">delete</span>
                                                 </button>
                                             </form>

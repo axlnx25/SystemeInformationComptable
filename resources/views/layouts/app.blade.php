@@ -145,6 +145,46 @@
 
     <!-- Scripts -->
     <script src="{{ asset('js/app.js') }}"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            // Debug clic sur les boutons "Supprimer"
+            document.querySelectorAll('[data-debug-delete-btn]').forEach(function (btn) {
+                btn.addEventListener('click', function (event) {
+                    const form = btn.closest('form');
+                    if (!form) return;
+
+                    console.log('[DEBUG DELETE][click]', {
+                        context: btn.getAttribute('data-debug-delete-btn'),
+                        action: form.getAttribute('action'),
+                        method: form.getAttribute('method'),
+                        spoofedMethod: form.querySelector('input[name="_method"]')?.value || null,
+                        journalId: form.dataset.journalId || null,
+                        journalName: form.dataset.journalName || null,
+                        numeroOperation: form.dataset.numeroOperation || null,
+                        userId: form.dataset.userId || null,
+                        userName: form.dataset.userName || null,
+                    });
+                });
+            });
+
+            // Debug juste avant l'envoi du formulaire (après le confirm)
+            document.querySelectorAll('form[data-debug-delete]').forEach(function (form) {
+                form.addEventListener('submit', function (event) {
+                    console.log('[DEBUG DELETE][submit]', {
+                        context: form.getAttribute('data-debug-delete'),
+                        action: form.getAttribute('action'),
+                        method: form.getAttribute('method'),
+                        spoofedMethod: form.querySelector('input[name=\"_method\"]')?.value || null,
+                        journalId: form.dataset.journalId || null,
+                        journalName: form.dataset.journalName || null,
+                        numeroOperation: form.dataset.numeroOperation || null,
+                        userId: form.dataset.userId || null,
+                        userName: form.dataset.userName || null,
+                    });
+                });
+            });
+        });
+    </script>
     @stack('scripts')
 </body>
 

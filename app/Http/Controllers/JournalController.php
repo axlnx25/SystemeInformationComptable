@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Journal;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 
 class JournalController extends Controller
 {
@@ -94,12 +95,31 @@ class JournalController extends Controller
      */
     public function destroy(Journal $journal)
     {
-        $this->authorize('delete', $journal);
+        \Log::info('Attempting to delete journal', ['journal_id' => $journal->id, 'user_id' => auth()->id()]);
+        
+        try {
+            $this->authorize('delete', $journal);
+            \Log::info('Authorization passed');
 
-        $journal->delete();
+            DB::transaction(function () use ($journal) {
+                // Delete related operations first to avoid foreign key constraint issues
+                $deletedOperations = $journal->operations()->delete();
+                \Log::info('Deleted related operations before journal', [
+                    'journal_id' => $journal->id,
+                    'deleted_operations_count' => $deletedOperations,
+                ]);
 
-        return redirect()->route('journals.index')
-            ->with('success', 'Journal supprimé avec succès !');
+                $journal->delete();
+                \Log::info('Journal deleted successfully inside transaction', ['journal_id' => $journal->id]);
+            });
+            
+            return redirect()->route('journals.index')
+                ->with('success', 'Journal supprimé avec succès !');
+        } catch (\Exception $e) {
+            \Log::error('Error deleting journal', ['error' => $e->getMessage()]);
+            return redirect()->route('journals.index')
+                ->with('error', 'Erreur lors de la suppression: ' . $e->getMessage());
+        }
     }
 
     /**

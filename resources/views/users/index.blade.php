@@ -46,10 +46,14 @@
                                         ✏️ Modifier
                                     </a>
                                     @if ($user->id !== auth()->id())
-                                        <form action="{{ route('users.destroy', $user) }}" method="POST">
+                                        <form action="{{ route('users.destroy', $user) }}" method="POST"
+                                            data-debug-delete="user-index"
+                                            data-user-id="{{ $user->id }}"
+                                            data-user-name="{{ $user->name }}">
                                             @csrf
                                             @method('DELETE')
                                             <button type="submit" class="btn btn-danger btn-sm"
+                                                data-debug-delete-btn="user-index"
                                                 data-confirm-delete="Êtes-vous sûr de vouloir supprimer l'utilisateur {{ $user->name }} ?">
                                                 🗑️ Supprimer
                                             </button>
