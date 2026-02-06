@@ -109,3 +109,8 @@
 .table td:last-child {
     min-width: 200px;
 }
+
+/* Prevent button wrapping in action cells */
+.table td .row.gap {
+    flex-wrap: nowrap;
+}

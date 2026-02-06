@@ -14,9 +14,13 @@
         rel="stylesheet">
 
     <!-- Styles -->
+    <link rel="stylesheet"
+        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
     <link rel="stylesheet" href="{{ asset('css/react-index.css') }}">
     <link rel="stylesheet" href="{{ asset('css/react-app.css') }}">
     <link rel="stylesheet" href="{{ asset('css/table-fixes.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/dashboard.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/sidebar-enhancements.css') }}">
 
     @stack('styles')
 </head>
@@ -26,32 +30,51 @@
         <!-- Sidebar -->
         <aside class="sidebar">
             <div class="sidebarHeader">
-                <div class="sidebarTitle">💼 SIC Compta</div>
+                <div class="sidebarBrand">
+                    <div class="sidebarBrandIcon">
+                        <span class="material-symbols-outlined">account_balance</span>
+                    </div>
+                    <div class="sidebarBrandText">
+                        <div class="sidebarTitle">SIC Compta</div>
+                        <div class="sidebarSubtitle">Système Comptable</div>
+                    </div>
+                </div>
             </div>
 
             <nav class="sideNav">
                 <a href="{{ route('dashboard') }}"
                     class="sideNavLink {{ request()->routeIs('dashboard') ? 'sideNavLinkActive' : '' }}">
-                    <div class="sideNavIcon">📊</div>
+                    <div class="sideNavIcon">
+                        <span class="material-symbols-outlined">dashboard</span>
+                    </div>
                     <div class="sideNavLabel">Tableau de bord</div>
                 </a>
 
                 <a href="{{ route('journals.new') }}"
                     class="sideNavLink {{ request()->routeIs('journals.new') ? 'sideNavLinkActive' : '' }}">
-                    <div class="sideNavIcon">➕</div>
+                    <div class="sideNavIcon">
+                        <span class="material-symbols-outlined">add_circle</span>
+                    </div>
                     <div class="sideNavLabel">Nouveau journal</div>
                 </a>
 
                 <a href="{{ route('journals.index') }}"
                     class="sideNavLink {{ request()->routeIs('journals.*') && !request()->routeIs('journals.new') ? 'sideNavLinkActive' : '' }}">
-                    <div class="sideNavIcon">📘</div>
+                    <div class="sideNavIcon">
+                        <span class="material-symbols-outlined">history</span>
+                    </div>
                     <div class="sideNavLabel">Historique</div>
                 </a>
 
                 @if (auth()->user()->is_admin ?? false)
+                    <div class="sideNavDivider"></div>
+                    <div class="sideNavSection">Administration</div>
+
                     <a href="{{ route('users.index') }}"
                         class="sideNavLink {{ request()->routeIs('users.*') ? 'sideNavLinkActive' : '' }}">
-                        <div class="sideNavIcon">👥</div>
+                        <div class="sideNavIcon">
+                            <span class="material-symbols-outlined">group</span>
+                        </div>
                         <div class="sideNavLabel">Utilisateurs</div>
                     </a>
                 @endif
@@ -59,15 +82,30 @@
 
             <div class="sidebarFooter">
                 <div class="sidebarUser">
-                    <div class="sidebarAvatar">{{ strtoupper(substr(auth()->user()->name, 0, 1)) }}</div>
-                    <div class="sidebarUserLabel">{{ auth()->user()->name }}</div>
+                    <div class="sidebarAvatar">
+                        <span class="material-symbols-outlined">person</span>
+                    </div>
+                    <div class="sidebarUserInfo">
+                        <div class="sidebarUserLabel">{{ auth()->user()->name }}</div>
+                        <div class="sidebarUserRole">
+                            @if (auth()->user()->is_admin)
+                                <span class="material-symbols-outlined"
+                                    style="font-size: 12px;">admin_panel_settings</span>
+                                Administrateur
+                            @else
+                                <span class="material-symbols-outlined" style="font-size: 12px;">person</span>
+                                Utilisateur
+                            @endif
+                        </div>
+                    </div>
                 </div>
 
                 <form action="{{ route('logout') }}" method="POST" style="margin-top: 8px;">
                     @csrf
-                    <button type="submit" class="sideNavLink"
-                        style="width: 100%; border: none; background: none; cursor: pointer;">
-                        <div class="sideNavIcon">🚪</div>
+                    <button type="submit" class="sideNavLink sideNavLinkLogout">
+                        <div class="sideNavIcon">
+                            <span class="material-symbols-outlined">logout</span>
+                        </div>
                         <div class="sideNavLabel">Déconnexion</div>
                     </button>
                 </form>

@@ -20,6 +20,17 @@ class DashboardController extends Controller
             $query->where('user_id', $user->id);
         })->count();
         
+        // Calculate total debit and credit across all journals
+        $allOperations = \App\Models\Operation::whereHas('journal', function ($query) use ($user) {
+            $query->where('user_id', $user->id);
+        })->get();
+        
+        $totalDebit = $allOperations->sum('debit');
+        $totalCredit = $allOperations->sum('credit');
+        $balancedJournals = $user->journals()->get()->filter(function ($journal) {
+            return $journal->isBalanced();
+        })->count();
+        
         // Get recent journals
         $recentJournals = $user->journals()
             ->withCount('operations')
@@ -35,6 +46,13 @@ class DashboardController extends Controller
             $journal->is_balanced = $journal->isBalanced();
         });
         
-        return view('dashboard', compact('totalJournals', 'totalOperations', 'recentJournals'));
+        return view('dashboard', compact(
+            'totalJournals',
+            'totalOperations',
+            'totalDebit',
+            'totalCredit',
+            'balancedJournals',
+            'recentJournals'
+        ));
     }
 }
