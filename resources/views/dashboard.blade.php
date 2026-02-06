@@ -178,19 +178,26 @@
                                         @endif
                                     </td>
                                     <td class="right">
-                                        <div class="row gap" style="justify-content: flex-end; flex-wrap: nowrap;">
-                                            <a class="link" href="{{ route('journals.history', $journal) }}"
-                                                style="display: inline-flex; align-items: center; gap: 4px;">
-                                                <span class="material-symbols-outlined"
-                                                    style="font-size: 16px;">visibility</span>
-                                                Voir
+                                        <div
+                                            style="display: flex; align-items: center; justify-content: flex-end; gap: 8px;">
+                                            <a href="{{ route('journals.history', $journal) }}" class="iconBtn"
+                                                title="Voir l'historique">
+                                                <span class="material-symbols-outlined">visibility</span>
                                             </a>
-                                            <a class="btn" href="{{ route('journals.operations', $journal) }}"
-                                                style="display: inline-flex; align-items: center; gap: 6px;">
-                                                <span class="material-symbols-outlined"
-                                                    style="font-size: 16px;">edit_note</span>
-                                                Continuer
+                                            <a href="{{ route('journals.operations', $journal) }}"
+                                                class="iconBtn iconBtnPrimary" title="Continuer la saisie">
+                                                <span class="material-symbols-outlined">edit_note</span>
                                             </a>
+                                            <form action="{{ route('journals.destroy', $journal) }}" method="POST"
+                                                style="display: inline;"
+                                                onsubmit="return confirm('Êtes-vous sûr de vouloir supprimer le journal « {{ $journal->designation }} » et toutes ses opérations ?');">
+                                                @csrf
+                                                @method('DELETE')
+                                                <button type="submit" class="iconBtn iconBtnDanger"
+                                                    title="Supprimer le journal">
+                                                    <span class="material-symbols-outlined">delete</span>
+                                                </button>
+                                            </form>
                                         </div>
                                     </td>
                                 </tr>

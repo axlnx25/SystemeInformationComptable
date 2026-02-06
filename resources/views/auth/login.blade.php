@@ -1,48 +1,56 @@
 @extends('layouts.guest')
 
 @section('title', 'Connexion')
-@section('auth-title', 'Connexion')
-@section('auth-subtitle', 'Accédez à votre espace comptable')
+@section('auth-title', 'Bienvenue !')
+@section('auth-subtitle', 'Connectez-vous à votre espace comptable')
 
 @section('content')
     <form action="{{ route('login') }}" method="POST">
         @csrf
 
-        <div class="form-group">
-            <label for="email" class="form-label">Email</label>
-            <input type="email" id="email" name="email" class="form-control" value="{{ old('email') }}"
-                placeholder="votre@email.com" required autofocus>
+        <div class="formGroup">
+            <label for="email" class="formLabel">Adresse email</label>
+            <div class="inputGroup">
+                <div class="inputIcon">
+                    <span class="material-symbols-outlined">mail</span>
+                </div>
+                <input type="email" id="email" name="email" class="formInput" value="{{ old('email') }}"
+                    placeholder="votre@email.com" required autofocus>
+            </div>
             @error('email')
-                <span class="form-error">{{ $message }}</span>
+                <span class="formError">{{ $message }}</span>
             @enderror
         </div>
 
-        <div class="form-group">
-            <label for="password" class="form-label">Mot de passe</label>
-            <input type="password" id="password" name="password" class="form-control" placeholder="••••••••" required>
+        <div class="formGroup">
+            <label for="password" class="formLabel">Mot de passe</label>
+            <div class="inputGroup">
+                <div class="inputIcon">
+                    <span class="material-symbols-outlined">lock</span>
+                </div>
+                <input type="password" id="password" name="password" class="formInput" placeholder="••••••••" required>
+            </div>
             @error('password')
-                <span class="form-error">{{ $message }}</span>
+                <span class="formError">{{ $message }}</span>
             @enderror
         </div>
 
-        <div class="form-group">
-            <label style="display: flex; align-items: center; gap: 0.5rem; cursor: pointer;">
+        <div class="formGroup">
+            <div class="checkboxGroup">
                 <input type="checkbox" name="remember" id="remember">
-                <span style="color: var(--gray-300); font-size: 0.875rem;">Se souvenir de moi</span>
-            </label>
+                <label for="remember">Se souvenir de moi</label>
+            </div>
         </div>
 
-        <button type="submit" class="btn btn-primary" style="width: 100%;">
+        <button type="submit" class="btnPrimary">
+            <span class="material-symbols-outlined" style="font-size: 20px;">login</span>
             Se connecter
         </button>
 
-        <div class="text-center mt-4">
-            <p style="color: var(--gray-400); margin: 0;">
+        <div class="authFooter">
+            <p>
                 Pas encore de compte ?
-                <a href="{{ route('register') }}"
-                    style="color: var(--primary-400); text-decoration: none; font-weight: 600;">
-                    Créer un compte
-                </a>
+                <a href="{{ route('register') }}">Créer un compte</a>
             </p>
         </div>
     </form>

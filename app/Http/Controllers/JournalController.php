@@ -103,14 +103,15 @@ class JournalController extends Controller
     }
 
     /**
-     * Show operations entry form for a journal
+     * Show the form for adding operations to a journal
      */
     public function operations(Journal $journal)
     {
         $this->authorize('view', $journal);
 
-        // Get next operation number
-        $nextOperationNumber = \App\Models\Operation::getNextOperationNumber($journal->id);
+        // Get the next operation number (max + 1, or 1 if no operations)
+        $maxNumero = $journal->operations()->max('numero_operation');
+        $nextOperationNumber = $maxNumero ? $maxNumero + 1 : 1;
 
         return view('journals.operations', compact('journal', 'nextOperationNumber'));
     }

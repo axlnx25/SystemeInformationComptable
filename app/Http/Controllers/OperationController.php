@@ -136,6 +136,18 @@ class OperationController extends Controller
             ->where('numero_operation', $numeroOperation)
             ->delete();
 
+        // Calculate next operation number after deletion
+        $maxNumero = $journal->operations()->max('numero_operation');
+        $nextOperationNumber = $maxNumero ? $maxNumero + 1 : 1;
+
+        if (request()->expectsJson()) {
+            return response()->json([
+                'success' => true,
+                'message' => sprintf('Opération n°%s supprimée (%d lignes).', $numeroOperation, $deleted),
+                'nextOperationNumber' => $nextOperationNumber
+            ]);
+        }
+
         return redirect()->route('journals.history', $journal)
             ->with('success', sprintf('Opération n°%s supprimée (%d lignes).', $numeroOperation, $deleted));
     }

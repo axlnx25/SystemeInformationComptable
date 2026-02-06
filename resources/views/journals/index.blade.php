@@ -68,13 +68,25 @@
                                 <td class="right mono">{{ number_format($journal->total_debit, 0, ',', ' ') }}</td>
                                 <td class="right mono">{{ number_format($journal->total_credit, 0, ',', ' ') }}</td>
                                 <td class="right">
-                                    <div class="row gap" style="justify-content: flex-end;">
-                                        <a class="link" href="{{ route('journals.history', $journal) }}">
-                                            Voir
+                                    <div style="display: flex; align-items: center; justify-content: flex-end; gap: 8px;">
+                                        <a href="{{ route('journals.history', $journal) }}" class="iconBtn"
+                                            title="Voir l'historique">
+                                            <span class="material-symbols-outlined">visibility</span>
                                         </a>
-                                        <a class="btn" href="{{ route('journals.operations', $journal) }}">
-                                            Continuer
+                                        <a href="{{ route('journals.operations', $journal) }}"
+                                            class="iconBtn iconBtnPrimary" title="Continuer la saisie">
+                                            <span class="material-symbols-outlined">edit_note</span>
                                         </a>
+                                        <form action="{{ route('journals.destroy', $journal) }}" method="POST"
+                                            style="display: inline;"
+                                            onsubmit="return confirm('Êtes-vous sûr de vouloir supprimer le journal « {{ $journal->designation }} » et toutes ses opérations ?');">
+                                            @csrf
+                                            @method('DELETE')
+                                            <button type="submit" class="iconBtn iconBtnDanger"
+                                                title="Supprimer le journal">
+                                                <span class="material-symbols-outlined">delete</span>
+                                            </button>
+                                        </form>
                                     </div>
                                 </td>
                             </tr>
